@@ -1,0 +1,70 @@
+# ============================================================
+# Charging Station Priority — configuration
+# Tier mapping (user-specified):
+#   tier 0 = emergency vehicle (highest priority)
+#   tier 1 = car
+#   tier 2 = semi truck (articulated)
+#   tier 3 = truck (single unit)
+# ============================================================
+
+# Output classes the model is trained on (8 fine classes).
+# Fine classes are kept separate for evaluation, then mapped to tiers.
+CLASS_NAMES:
+  - ambulance
+  - fire_truck
+  - police
+  - car
+  - pickup_truck
+  - work_van
+  - semi_truck
+  - truck
+
+# Fine class -> priority tier
+TIER_MAP:
+  ambulance: 0
+  fire_truck: 0
+  police: 0
+  car: 1
+  pickup_truck: 1
+  work_van: 1
+  semi_truck: 2
+  truck: 3
+
+TIER_NAMES:
+  0: "EMERGENCY (tier 0)"
+  1: "CAR (tier 1)"
+  2: "SEMI_TRUCK (tier 2)"
+  3: "TRUCK (tier 3)"
+
+# --- source dataset label -> unified fine class ---
+MIO_TCD_MAP:
+  articulated_truck: semi_truck
+  single_unit_truck: truck
+  car: car
+  pickup_truck: pickup_truck
+  work_van: work_van
+
+EMERGENCY_MAP:
+  ambulance: ambulance
+  fire_truck: fire_truck
+  firetruck: fire_truck
+  police: police
+  police_car: police
+  car: car
+
+# --- split ratios (applied per source dataset, grouped to avoid leakage) ---
+SPLIT_RATIOS:
+  train: 0.70
+  val: 0.15
+  test: 0.15
+
+# --- model ---
+MODEL: yolov8s.pt        # small: good accuracy/speed balance for 8GB GPU
+IMG_SIZE: 640
+EPOCHS: 40
+BATCH: 16
+PATIENCE: 12
+
+# --- inference ---
+CONF_THRESHOLD: 0.25
+MIN_TIER_FRAMES: 5       # frames a vehicle must be confirmed before tier is assigned

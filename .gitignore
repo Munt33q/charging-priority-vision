@@ -1,0 +1,30 @@
+# Local data, archives, generated datasets, and caches
+data/
+__pycache__/
+*.py[cod]
+.pytest_cache/
+.venv/
+venv/
+
+# Model checkpoints and training runs (store in artifact storage, not Git)
+*.pt
+*.onnx
+models/
+weights/
+runs/
+
+# Generated evaluation/demo output
+reports/*.log
+reports/*_log.txt
+reports/split_manifest.csv
+reports/eval/
+
+# Credentials and local environment files
+.env
+*.key
+*.pem
+
+# Unrelated workspace projects
+eeg-motor-imagery-controller/
+eeg-quality-inspector/
+portfolio/
